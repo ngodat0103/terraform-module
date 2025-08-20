@@ -19,3 +19,7 @@ variable "bridge_comment" {
   type        = string
   default     = "vmbr99 comment"
 }
+variable "is_dhcp_enabled"{
+  type = bool
+  default = false
+}
