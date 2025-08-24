@@ -41,22 +41,19 @@ variable "mount_bind_volume" {
   default     = "/mnt/bindmounts/shared"
 }
 
-variable "mount_bind_path" {
-  description = "Bind mount path inside container"
-  type        = string
-  default     = "/mnt/shared"
-}
-
 variable "mount_volume_name" {
   description = "Volume mount name"
   type        = string
-  default     = "local-lvm"
 }
 
 variable "mount_volume_size" {
-  description = "Volume mount size"
-  type        = string
-  default     = "10G"
+  description = "Volume mount size in GB"
+  type        = number
+  default     = 10
+}
+variable "tags"{
+  type = list(string)
+  default = [""]
 }
 
 variable "mount_volume_path" {
@@ -79,4 +76,7 @@ variable "cores"{
 variable "memory"{
         default = 512
         type = number
+}
+variable "datastore_id" {
+  type = string
 }

@@ -9,6 +9,7 @@ resource "proxmox_virtual_environment_container" "ubuntu_container" {
 
   node_name = var.node_name
   vm_id     = var.vm_id
+  tags = var.tags
 
   initialization {
     hostname = var.hostname
@@ -35,7 +36,7 @@ resource "proxmox_virtual_environment_container" "ubuntu_container" {
 
   disk {
     datastore_id = var.mount_volume_name
-    size         = var.container_disk_size
+    size         = var.mount_volume_size
   }
 
   operating_system {
