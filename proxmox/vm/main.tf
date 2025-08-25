@@ -3,9 +3,9 @@
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   content_type = "snippets"
   datastore_id = "local"
-  node_name    = var.node_name 
+  node_name    = var.node_name
   source_raw {
-    data = <<-EOF
+    data      = <<-EOF
     #cloud-config
     hostname: ${var.hostname}
     timezone: Asia/Ho_Chi_Minh
@@ -24,9 +24,9 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   name        = var.name
   description = var.description
   tags        = var.tags
-  protection = var.protection
-  node_name = var.node_name
-  vm_id     = var.vm_id
+  protection  = var.protection
+  node_name   = var.node_name
+  vm_id       = var.vm_id
 
   agent {
     # read 'Qemu guest agent' section, change to true only when ready
@@ -36,9 +36,9 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   # if agent is not enabled, the VM may not be able to shutdown properly, and may need to be forced off
   stop_on_destroy = true
   startup {
-    order      = "3"
-    up_delay   = "60"
-    down_delay = "60"
+    order      = var.startup_config.order
+    up_delay   = var.startup_config.up_delay
+    down_delay = var.startup_config.down_delay
   }
 
   cpu {
@@ -53,19 +53,20 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   disk {
     datastore_id = var.datastore_id
     import_from  = var.template_image_id
-    size = var.boot_disk_size
+    size         = var.boot_disk_size
     interface    = var.boot_disk_interface
   }
 
-  dynamic "disk"{
+  dynamic "disk" {
     for_each = var.additional_disks != null ? var.additional_disks : {}
     content {
       datastore_id      = disk.value["datastore_id"]
       path_in_datastore = disk.value["path_in_datastore"]
       file_format       = disk.value["file_format"]
       size              = disk.value["size"]
-      interface = disk.value["interface"]
-      backup = disk.value["backup"]
+      interface         = disk.value["interface"]
+      backup            = disk.value["backup"]
+      replicate = disk.value["replicate"]
     }
   }
 
@@ -90,7 +91,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   }
 
   tpm_state {
-    version = "v2.0"
+    version      = "v2.0"
     datastore_id = var.datastore_id
   }
 

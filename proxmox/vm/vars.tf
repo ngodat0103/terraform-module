@@ -6,7 +6,7 @@ variable "name" {
 variable "description" {
   description = "A description for the virtual machine."
   type        = string
-  default = ""
+  default     = ""
 }
 
 variable "tags" {
@@ -38,7 +38,7 @@ variable "memory" {
 variable "datastore_id" {
   description = "The datastore ID where the VM's disk will be stored."
   type        = string
-  default = "local-lvm"
+  default     = "local-lvm"
 }
 
 variable "template_image_id" {
@@ -50,48 +50,65 @@ variable "bridge_name" {
   description = "The name of the network bridge to attach the VM to."
   type        = string
 }
-variable "ip_address"{
-        type = string
-        default = "dhcp"
+variable "ip_address" {
+  type    = string
+  default = "dhcp"
 }
-variable "gateway"{
-        type = string
-        default = ""
+variable "gateway" {
+  type    = string
+  default = ""
 }
-variable "hostname"{
-        type = string
-        
+variable "hostname" {
+  type = string
+
 }
-variable "public_key"{
+variable "public_key" {
   type = string
 }
-variable "boot_disk_size"{
-  type = number
+variable "boot_disk_size" {
+  type    = number
   default = 30
 }
-variable "cpu_type"{
-  type =  string
+variable "cpu_type" {
+  type    = string
   default = "x86-64-v2-AES"
 }
-variable "boot_disk_interface"{
-  type = string
+variable "boot_disk_interface" {
+  type    = string
   default = "virtio0"
 }
-variable "protection"{
-  type = bool
-  default =false
-  description ="(Optional) Sets the protection flag of the VM. This will disable the remove VM and remove disk operations (defaults to false).Optional) Sets the protection flag of the VM. This will disable the remove VM and remove disk operations (defaults to false)."
+variable "protection" {
+  type        = bool
+  default     = false
+  description = "(Optional) Sets the protection flag of the VM. This will disable the remove VM and remove disk operations (defaults to false).Optional) Sets the protection flag of the VM. This will disable the remove VM and remove disk operations (defaults to false)."
 }
 
-variable "additional_disks"{
+variable "additional_disks" {
   description = "Map of disk file definitions"
   type = map(object({
-    datastore_id      = optional(string,null)
-    path_in_datastore = optional(string,null)
-    file_format       = optional(string,null)
-    size              = optional(number,null)
-    interface = string
-    backup = optional(bool,true)
+    datastore_id      = optional(string, null)
+    path_in_datastore = optional(string, null)
+    file_format       = optional(string, null)
+    size              = optional(number, null)
+    interface         = string
+    backup            = optional(bool, true)
+    replicate = optional(bool,false)
   }))
   default = null
 }
+variable "startup_config" {
+  description = "Startup configuration for the VM"
+  type = object(
+    {
+      order      = number
+      up_delay   = number
+      down_delay = number
+    }
+  )
+  default = {
+    order = 3
+    up_delay = 60
+    down_delay =  60
+  }
+}
+
