@@ -66,7 +66,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
       size              = disk.value["size"]
       interface         = disk.value["interface"]
       backup            = disk.value["backup"]
-      replicate = disk.value["replicate"]
+      replicate         = disk.value["replicate"]
     }
   }
 
@@ -84,6 +84,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
 
   network_device {
     bridge = var.bridge_name
+    model  = var.network_model
   }
 
   operating_system {

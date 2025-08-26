@@ -92,7 +92,7 @@ variable "additional_disks" {
     size              = optional(number, null)
     interface         = string
     backup            = optional(bool, true)
-    replicate = optional(bool,false)
+    replicate         = optional(bool, false)
   }))
   default = null
 }
@@ -106,9 +106,13 @@ variable "startup_config" {
     }
   )
   default = {
-    order = 3
-    up_delay = 60
-    down_delay =  60
+    order      = 3
+    up_delay   = 60
+    down_delay = 60
   }
+}
+variable "network_model" {
+  type    = string
+  default = "virtio"
 }
 
