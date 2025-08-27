@@ -7,15 +7,16 @@ variable "node_name" {
 variable "vm_id" {
   description = "Container VM ID"
   type        = number
-  default     = 1234
+  default     = null
 }
-variable "network_interface_name"{
+variable "network_interface_name" {
   description = "interface name"
-  type = string
+  type        = string
+  default     = "eth0"
 }
-variable "network_interface_bridge"{
+variable "network_interface_bridge" {
   description = "The network interface, default to vmbr0"
-  type = string
+  type        = string
 }
 
 variable "hostname" {
@@ -51,8 +52,8 @@ variable "mount_volume_size" {
   type        = number
   default     = 10
 }
-variable "tags"{
-  type = list(string)
+variable "tags" {
+  type    = list(string)
   default = [""]
 }
 
@@ -61,22 +62,47 @@ variable "mount_volume_path" {
   type        = string
   default     = "/mnt/volume"
 }
-variable "ip_address"{
-        type = string
-        description = "ip address"
+variable "ip_address" {
+  type        = string
+  description = "ip address"
 }
 variable "gateway" {
-        type = string
-        description ="Gateway"
+  type        = string
+  description = "Gateway"
 }
-variable "cores"{
-        type = number
-        default = 1
+variable "cores" {
+  type    = number
+  default = 1
 }
-variable "memory"{
-        default = 512
-        type = number
+variable "memory" {
+  default = 512
+  type    = number
 }
 variable "datastore_id" {
-  type = string
+  type    = string
+  default = "local-lvm"
+}
+variable "operating_system_type" {
+  type    = string
+  default = "unmanaged"
+}
+variable "startup_config" {
+  description = "Startup configuration for the VM"
+  type = object(
+    {
+      order      = number
+      up_delay   = number
+      down_delay = number
+    }
+  )
+  default = {
+    order      = 3
+    up_delay   = 60
+    down_delay = 60
+  }
+}
+variable "protection" {
+  description = ""
+  default     = false
+  type        = bool
 }
