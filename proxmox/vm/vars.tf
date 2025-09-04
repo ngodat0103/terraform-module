@@ -23,6 +23,7 @@ variable "node_name" {
 variable "vm_id" {
   description = "The unique ID for the virtual machine."
   type        = number
+  default = null
 }
 
 variable "cpu_cores" {
