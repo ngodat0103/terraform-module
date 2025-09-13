@@ -1,4 +1,3 @@
-# terraform import cloudflare_ruleset.default zones/ab6606e8b3aad0b66008eb26f2dd3660/cfe2f8797a314e5ba48192a7e7520bd0
 terraform {
   required_providers {
     cloudflare = {

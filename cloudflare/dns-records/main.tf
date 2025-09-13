@@ -16,7 +16,7 @@ resource "cloudflare_dns_record" "default_load" {
   comment  = var.share_comment
   name     = each.key
   proxied  = each.value.proxied
-  ttl      = each.value.proxied ? 1 : each.value.content
-  type     = each.value.type 
+  ttl      = each.value.proxied ? 1 : each.value.ttl
+  type     = each.value.type
   content  = each.value.type == "CNAME" ? var.ddns_content : each.value.content
 }

@@ -1,20 +1,20 @@
-variable "dns_records"{
-        description= "List of dns records"
-        type = map(object({
-              type = string
-              content = optional(string)
-              proxied = optional(bool,true)
-              ttl = optional(number,300)  
-        }))
+variable "dns_records" {
+  description = "List of dns records"
+  type = map(object({
+    type    = string
+    content = optional(string)
+    proxied = optional(bool, true)
+    ttl     = optional(number, 300)
+  }))
 }
-variable "zone_id"{ 
-        type = string
-        description = "Your Zone ID"
+variable "zone_id" {
+  type        = string
+  description = "Your Zone ID"
 }
-variable "share_comment"{
-        type = string
-        description = "Your comment"
-        default = "Managed by Terraform"
+variable "share_comment" {
+  type        = string
+  description = "Your comment"
+  default     = "Managed by Terraform"
 }
 
 
