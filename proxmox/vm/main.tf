@@ -1,5 +1,3 @@
-
-
 resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
   content_type = "snippets"
   datastore_id = "local"
@@ -15,8 +13,22 @@ resource "proxmox_virtual_environment_file" "user_data_cloud_config" {
         ssh_authorized_keys:
           - ${var.public_key}
     package_update: true
+    write_files:
+      - path: /root/.bashrc
+        content: |
+          # Enable colors
+          export LS_OPTIONS='--color=auto'
+          alias ls='ls $LS_OPTIONS'
+          alias ll='ls -l $LS_OPTIONS'
+          alias l='ls -alF $LS_OPTIONS'
+          # Colored prompt
+          PS1='\[\e[01;31m\]\u@\h\[\e[00m\]:\[\e[01;34m\]\w\[\e[00m\]\$ '
+        permissions: '0644'
     EOF
     file_name = "${var.name}-cloud-config.yaml"
+  }
+  lifecycle {
+    ignore_changes = [source_raw]
   }
 }
 
