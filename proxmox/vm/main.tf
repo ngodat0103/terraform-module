@@ -120,6 +120,6 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   on_boot = var.on_boot
 
   lifecycle {
-    ignore_changes = [started]
+    ignore_changes = [started,cdrom]
   }
 }
