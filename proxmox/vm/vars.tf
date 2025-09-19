@@ -45,6 +45,20 @@ variable "datastore_id" {
 variable "template_image_id" {
   description = "The ID of the template image to use for the VM."
   type        = string
+  default     = null
+}
+variable "cdrom" {
+  description = "Configuration for CD rom"
+  type = object({
+    enabled   = bool
+    file_id   = string
+    interface = optional(string, "sata0")
+  })
+  default = {
+    enabled   = false
+    file_id   = null
+    interface = "sata0"
+  }
 }
 
 variable "bridge_name" {

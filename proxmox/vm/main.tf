@@ -65,8 +65,15 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   disk {
     datastore_id = var.datastore_id
     import_from  = var.template_image_id
+    file_format  = var.template_image_id == null ? "raw" : "qcow2"
     size         = var.boot_disk_size
     interface    = var.boot_disk_interface
+  }
+
+  cdrom {
+    enabled   = var.cdrom.enabled
+    file_id   = var.cdrom.file_id
+    interface = var.cdrom.interface
   }
 
   dynamic "disk" {
