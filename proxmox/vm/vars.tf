@@ -116,4 +116,8 @@ variable "network_model" {
   type    = string
   default = "virtio"
 }
+variable "on_boot" {
+  type    = bool
+  default = false
+}
 

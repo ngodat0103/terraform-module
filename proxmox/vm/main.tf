@@ -109,4 +109,10 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   }
 
   serial_device {}
+
+  on_boot = var.on_boot
+
+  lifecycle {
+    ignore_changes = [started]
+  }
 }
