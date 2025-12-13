@@ -2,7 +2,7 @@ terraform {
   required_providers {
     uptimerobot = {
       source = "uptimerobot/uptimerobot"
-      version = "1.3.1"
+      version = "1.3.3"
     }
   }
 }
@@ -11,8 +11,6 @@ provider "uptimerobot" {
   api_key = var.uptimerobot_api_key
   # api_url = "https://api.uptimerobot.com/v3" # Optional: Custom API endpoint
 }
-
-
 resource "uptimerobot_monitor" "default_monitor" {
   
   for_each = var.monitors
