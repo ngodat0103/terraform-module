@@ -71,8 +71,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   }
 
   cdrom {
-    enabled   = var.cdrom.enabled
-    file_id   = var.cdrom.file_id
+    file_id   = var.cdrom.file_id==null ?"none" : var.cdrom.file_id
     interface = var.cdrom.interface
   }
 
