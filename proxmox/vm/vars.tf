@@ -50,12 +50,10 @@ variable "template_image_id" {
 variable "cdrom" {
   description = "Configuration for CD rom"
   type = object({
-    enabled   = bool
     file_id   = string
     interface = optional(string, "sata0")
   })
   default = {
-    enabled   = false
     file_id   = null
     interface = "sata0"
   }

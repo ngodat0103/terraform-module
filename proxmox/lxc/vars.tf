@@ -106,3 +106,7 @@ variable "protection" {
   default     = false
   type        = bool
 }
+variable "description" {
+  default = "Managed by Terraform"
+  type    = string
+}

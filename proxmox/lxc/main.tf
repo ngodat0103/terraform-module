@@ -1,5 +1,5 @@
-resource "proxmox_virtual_environment_container" "ubuntu_container" {
-  description = "Managed by Terraform"
+resource "proxmox_virtual_environment_container" "container" {
+  description = var.description
   cpu {
     cores = var.cores
   }
@@ -13,14 +13,12 @@ resource "proxmox_virtual_environment_container" "ubuntu_container" {
 
   initialization {
     hostname = var.hostname
-
     ip_config {
       ipv4 {
         address = var.ip_address
         gateway = var.gateway
       }
     }
-
     user_account {
       keys = [
         trimspace(tls_private_key.ubuntu_container_key.public_key_openssh)
@@ -43,7 +41,7 @@ resource "proxmox_virtual_environment_container" "ubuntu_container" {
     template_file_id = var.template_file_id
     # Or you can use a volume ID, as obtained from a "pvesm list <storage>"
     # template_file_id = "local:vztmpl/jammy-server-cloudimg-amd64.tar.gz"
-    type = "ubuntu"
+    type = var.operating_system_type
   }
   startup {
     order      = var.startup_config.order
@@ -51,6 +49,10 @@ resource "proxmox_virtual_environment_container" "ubuntu_container" {
     down_delay = var.startup_config.down_delay
   }
   protection = var.protection
+
+  lifecycle {
+    ignore_changes = [operating_system]
+  }
 }
 resource "random_password" "ubuntu_container_password" {
   length           = 16
