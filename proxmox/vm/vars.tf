@@ -53,7 +53,7 @@ variable "cdrom" {
     file_id   = optional(string, "none")
     interface = optional(string, null)
   })
-  default = {}
+  default = null
 }
 
 variable "bridge_name" {
