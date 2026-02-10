@@ -70,11 +70,14 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
     interface    = var.boot_disk_interface
   }
 
-  cdrom {
-    file_id   = var.cdrom.file_id==null ?"none" : var.cdrom.file_id
-    interface = var.cdrom.interface
+  # Only creates the cdrom block if var.cdrom.file_id is not null or empty
+  dynamic "cdrom" {
+    for_each = var.cdrom.file_id != null && var.cdrom.file_id != "" ? [1] : []
+    content {
+      file_id   = var.cdrom.file_id
+      interface = var.cdrom.interface
+    }
   }
-
   dynamic "disk" {
     for_each = var.additional_disks != null ? var.additional_disks : {}
     content {

@@ -50,13 +50,10 @@ variable "template_image_id" {
 variable "cdrom" {
   description = "Configuration for CD rom"
   type = object({
-    file_id   = string
-    interface = optional(string, "sata0")
+    file_id   = optional(string, "none")
+    interface = optional(string, null)
   })
-  default = {
-    file_id   = null
-    interface = "sata0"
-  }
+  default = {}
 }
 
 variable "bridge_name" {
