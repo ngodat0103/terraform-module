@@ -72,7 +72,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
 
   # Only creates the cdrom block if var.cdrom.file_id is not null or empty
   dynamic "cdrom" {
-    for_each = var.cdrom.file_id != null && var.cdrom.file_id != "" ? [1] : []
+    for_each = var.cdrom != null ? var.cdrom : {}
     content {
       file_id   = var.cdrom.file_id
       interface = var.cdrom.interface
