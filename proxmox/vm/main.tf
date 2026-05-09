@@ -39,7 +39,6 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   protection  = var.protection
   node_name   = var.node_name
   vm_id       = var.vm_id
-
   agent {
     # read 'Qemu guest agent' section, change to true only when ready
     enabled = false
@@ -68,6 +67,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
     file_format  = var.template_image_id == null ? "raw" : "qcow2"
     size         = var.boot_disk_size
     interface    = var.boot_disk_interface
+    iothread=true
   }
 
   # Only creates the cdrom block if var.cdrom.file_id is not null or empty
