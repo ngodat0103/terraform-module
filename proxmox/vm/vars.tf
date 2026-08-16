@@ -35,6 +35,11 @@ variable "memory" {
   description = "The amount of memory (in MB) for the virtual machine."
   type        = number
 }
+variable "memory_floating" {
+  description = "Floating (minimum) memory for ballooning, in MB. Set to 0 or null to disable ballooning (floating = dedicated)."
+  type        = number
+  default     = null
+}
 
 variable "datastore_id" {
   description = "The datastore ID where the VM's disk will be stored."

@@ -59,7 +59,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
 
   memory {
     dedicated = var.memory
-    #floating  = 2048 # set equal to dedicated to enable ballooning
+    floating  = coalesce(var.memory_floating, var.memory)
   }
   disk {
     datastore_id = var.datastore_id
@@ -67,7 +67,7 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
     file_format  = var.template_image_id == null ? "raw" : "qcow2"
     size         = var.boot_disk_size
     interface    = var.boot_disk_interface
-    iothread=true
+    iothread     = true
   }
 
   # Only creates the cdrom block if var.cdrom.file_id is not null or empty
@@ -122,6 +122,10 @@ resource "proxmox_virtual_environment_vm" "vm_general" {
   on_boot = var.on_boot
 
   lifecycle {
-    ignore_changes = [started,cdrom]
+    precondition {
+      condition     = var.memory_floating == null || var.memory_floating <= var.memory
+      error_message = "memory_floating (${var.memory_floating}) cannot exceed memory (${var.memory})."
+    }
+    ignore_changes = [started, cdrom]
   }
 }
